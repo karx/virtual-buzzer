@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.js"></script>
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+        }
+    </style>
+    <title>Virtual Buzzer - 📢</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="to-connect-div">
+        <div aria-label="Connection Code" id="connection_code"></div>
+
+        <button
+          onclick="beginTheThing()"
+          aria-label="Click to initate"
+          class="btn"
+          id="init-btn"
+        >
+          Reveal Buzzer Code
+        </button>
+      </div>
+      <div id="buzzer_basic" onclick="buzzer_click()">
+        <img src="./assets/images/buzzer.jpg" alt="" />
+      </div>
+    </div>
+    <script src="./live-buzzer-mqtt.js"></script>
+  </body>
+</html>
