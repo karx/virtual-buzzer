@@ -19,6 +19,7 @@ function init() {
     document.getElementById('connection_code').innerHTML = number;
     document.getElementById('connection_code').setAttribute('aria-label', `Connection Code is ${number}`);
     let btn = document.getElementById('init-btn');
+    document.getElementById('buzzer_basic').style.backgroundColor = `#3E${number}`;
     // var pointer = document.getElementById('the-pointer-to-show');
     btn.style.display = "none";
 };

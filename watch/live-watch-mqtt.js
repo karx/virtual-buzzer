@@ -89,6 +89,7 @@ function add_to_list_of_tables(device_id) {
     el.className = 'each-table';
     el.id = device_id;
     el.innerHTML = device_id;
+    el.style.backgroundColor = `#3E${device_id}`;
     document.getElementById('all-tables').appendChild(el);
 }
 
