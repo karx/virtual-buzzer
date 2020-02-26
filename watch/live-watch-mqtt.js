@@ -83,14 +83,19 @@ function device_live_error_ui_notify() {
 }
 
 function add_to_list_of_tables(device_id) {
-    console.log(`adding table ${device_id}`);
-    list_of_tables.push(device_id);
-    let el = document.createElement('div');
-    el.className = 'each-table';
-    el.id = device_id;
-    el.innerHTML = device_id;
-    el.style.backgroundColor = `#3E${device_id}`;
-    document.getElementById('all-tables').appendChild(el);
+    if (list_of_tables.indexOf(device_id) < 0) {
+        console.log(`adding table ${device_id}`);
+        list_of_tables.push(device_id);
+        let el = document.createElement('div');
+        el.className = 'each-table';
+        el.id = device_id;
+        el.innerHTML = device_id;
+        el.style.backgroundColor = `#3E${device_id}`;
+        document.getElementById('all-tables').appendChild(el);
+    } else {
+        console.log('looks like table already subbed');
+    }
+    
 }
 
 function perform_vibration(type = 1) {
