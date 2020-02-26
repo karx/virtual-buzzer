@@ -1,11 +1,11 @@
-## Virtual Buzzer Demo
+## Virtual JustBuzz Demo
 
-* [Virtual Buzzers](https://vb.akriya.co.in)
+* [Virtual JustBuzzs](https://vb.akriya.co.in)
 * [Virtual Watch](https://vb.akriya.co.in/watch)
 
 Open as many as you want!
 
-Click on the Buzzer image to Request.
+Click on the JustBuzz image to Request.
 
 
 ### Recommendation
