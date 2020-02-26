@@ -91,7 +91,7 @@ function onMessageArrived(message) {
     } else if (message.topic === `vbuzzer/${number}/connected`){
         // show_options();
         show_connected_feedback();
-        send_ack_connection();
+        send_ack_connection(message.payloadString);
     } else if (message.topic === `vbuzzer/${number}/phrase`) {
         let phrase = message.payloadString;
         phrase = phrase.toLowerCase();
@@ -105,9 +105,9 @@ function onMessageArrived(message) {
 function show_connected_feedback() {
     document.getElementById('connection_code').style.backgroundColor ='#00FF00';
 }
-function send_ack_connection () {
+function send_ack_connection (ack_dev_id) {
     let message = new Paho.Message("ack");
-    message.destinationName = `vbuzzer/${number}/connection_ack`;
+    message.destinationName = `vbuzzer/${ack_dev_id}/connection_ack`;
     client.send(message);
 }
 

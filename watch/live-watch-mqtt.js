@@ -17,10 +17,10 @@ var ID = function() {
         .toString(36)
         .substr(2, 9)
     );
-  };
+  }();
 var client = new Paho.Client(
     "wss://api.akriya.co.in:8084/mqtt",
-    `clientId-vb-watch-${ID()}`
+    `clientId-vb-watch-${ID}`
 );
 
 // set callback handlers
@@ -35,6 +35,7 @@ function onConnect() {
     // Once a connection has been made, make a subscription and send a message.
     console.log("onConnect");
     client.subscribe("vbuzzer/watch/master");
+    client.subscribe(`vbuzzer/${ID}/connection_ack`);
     let message = new Paho.Message("Hello");
     message.destinationName = "vbuzzer/watch/presence";
     client.send(message);
@@ -55,20 +56,18 @@ function onMessageArrived(message) {
         console.log('One of our tables');
         perform_vibration(1);
         notify_table_ui(dev_id);
-    } else if (message.topic === `vbuzzer/${dev_id}/connection_ack`) {
+    } else if (message.topic === `vbuzzer/${ID}/connection_ack`) {
         add_to_list_of_tables(dev_id);
         device_live_ui_notify();
     }
 }
 
 function sendConformationToMobile(message_in) {
-    let message = new Paho.Message('Connected to Device ID');
+    let message = new Paho.Message(ID);
     message.destinationName = `vbuzzer/${message_in}/connected`;
     // client.subscribe(`vbuzzer/${message_in}/connected`);
     client.subscribe(`vbuzzer/${message_in}/requested`);
-    client.subscribe(`vbuzzer/${message_in}/connection_ack`);
     client.send(message);
-    
 }
 
 function device_live_ui_notify() {
