@@ -52,10 +52,12 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
     console.log("onMessageArrived:" + message.payloadString);
     console.log("The Topic:" + message.topic);
-    if (message.topic === `vbuzzer/${dev_id}/requested`) {
+    let stubs = message.topic.split('/');
+    if (stubs[0] === `vbuzzer` && stubs[2] === `requested`) {
+        let dev_id_in_request = stubs[1];
         console.log('One of our tables');
         perform_vibration(1);
-        notify_table_ui(dev_id);
+        notify_table_ui(dev_id_in_request);
     } else if (message.topic === `vbuzzer/${ID}/connection_ack`) {
         add_to_list_of_tables(dev_id);
         device_live_ui_notify();
