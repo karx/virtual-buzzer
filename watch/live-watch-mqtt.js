@@ -3,8 +3,14 @@ let list_of_tables = [];
 
 document.getElementById("btn-click").onclick = () => {
   dev_id = document.getElementById("connection_code").value;
-  sendConformationToMobile(dev_id);
-  console.log(`Device Id set to ${dev_id}`);
+  console.log(dev_id);
+  if (dev_id == 0x1a4) {
+    console.log('ftz');
+    sendMeetInfoToAll();
+  } else {
+    sendConformationToMobile(dev_id);
+    console.log(`Device Id set to ${dev_id}`);
+  }
 };
 var ID = (function() {
   // Math.random should be unique because of its seeding algorithm.
@@ -69,6 +75,13 @@ function sendConformationToMobile(message_in) {
   message.destinationName = `vbuzzer/${message_in}/connected`;
   // client.subscribe(`vbuzzer/${message_in}/connected`);
   client.subscribe(`vbuzzer/${message_in}/requested`);
+  client.send(message);
+}
+
+function sendMeetInfoToAll(message_in = 'wfh') {
+  let message = new Paho.Message(ID);
+  message.destinationName = `vbuzzer/ftz/requested`;
+  // client.subscribe(`vbuzzer/${message_in}/connected`);
   client.send(message);
 }
 
