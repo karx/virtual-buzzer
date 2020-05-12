@@ -51,3 +51,15 @@ These list of messages, lore, facts are to be shown on spec page as the Game pro
 * And yet you reach the top, everytime.
 * Make it beautiful while you are at it. [Link to design your own board]
 
+
+
+## Stream Progress  
+* We have the board base ready
+* We have moving player entities 
+* Message flow between controller and Board
+* Connection bw Controller and Board
+
+## Next tasks
+* Generate The Ups and Downs
+* Dice roll impl - Webcomponent would be nice
+* WebRTC to talk amongst players
