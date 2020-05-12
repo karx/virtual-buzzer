@@ -14,7 +14,12 @@ document.getElementById("btn-click").onclick = () => {
 };
 
 document.getElementById("send-number").onclick = () => {
-  sendDiceRollingNumber();
+  
+  let dice_number = parseInt(Math.random() * 6) + 1;
+  console.log(dice_number);
+  sendDiceRollingNumber(dice_number);
+
+  document.getElementById('dice-value').innerHTML = dice_number;
   
 }
 

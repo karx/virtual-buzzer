@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function(){
 const camera_rigs = ["camera", "camera2", "camera3", "camera4"];
 let switch_count = 0;
 
+let viceVirtueMap = {};
+
 let game_state = {
     total_players: 0,
     player_list: [
@@ -63,6 +65,9 @@ function init() {
     generateVice(78,21);
     generateVice(43,15);
     generateVice(63,44);
+
+
+    broadcastRommStarted();
 };
 
 // init();
@@ -174,6 +179,10 @@ function buzzer_click() {
     client.send(message);
 }
 
+function broadcastRommStarted() {
+    ;
+}
+
 
 function cam_rig_1() {
     console.log('firing event');
@@ -202,12 +211,35 @@ function init_player_if_new(dev_id) {
 
 }
 
-function updatePlayerWithVal(player_id, value) {
+async function updatePlayerWithVal(player_id, value) {
     let player = game_state.player_list[player_id];
     let playerEl = document.getElementById(player.DOM_id);
-    player.board_position += parseInt(value);
-    console.log(`Moving ${player_id} with ${value} block.. ${player.board_position} | -${(player.board_position)%(game_state.rowsize)} ${PLAYER_HEIGHT} ${ ((player.board_position)/(game_state.rowsize))}`);
-    playerEl.setAttribute('position', `-${(player.board_position)%(game_state.rowsize)} ${PLAYER_HEIGHT} ${ ((player.board_position)/(game_state.rowsize))}`);
+
+    for (let index = 1; index <= value; index++) {
+        
+        player.board_position += 1;
+
+        let new_position = calcBoxCordFromIndex(player.board_position);
+        console.log(`Moving ${player_id} with ${value} block.. ${player.board_position} | -${(player.board_position)%(game_state.rowsize)} ${PLAYER_HEIGHT} ${ ((player.board_position)/(game_state.rowsize))}`);
+        playerEl.setAttribute('position', `${new_position.x} ${PLAYER_HEIGHT} ${new_position.z}`);
+        await timeout(700);
+    }
+    
+
+    checkToSeeVirtueVice(player);
+}
+
+async function checkToSeeVirtueVice(player) {
+    if (viceVirtueMap[player.board_position]) {
+        let playerEl = document.getElementById(player.DOM_id);
+        player.board_position = viceVirtueMap[player.board_position];
+        let new_position = calcBoxCordFromIndex(player.board_position);
+        console.log(`Moving ${player_id} with ${value} block.. ${player.board_position} | -${(player.board_position)%(game_state.rowsize)} ${PLAYER_HEIGHT} ${ ((player.board_position)/(game_state.rowsize))}`);
+        playerEl.setAttribute('position', `${new_position.x} ${PLAYER_HEIGHT} ${new_position.z}`);
+                
+    } else {
+
+    }
 }
 
 
@@ -252,6 +284,8 @@ function generateVirtueVice(start_index, end_index, type = "virtue") {
     let theScene = document.getElementById('theScene');
     
     theScene.append(virtueTube);
+
+    viceVirtueMap[start_index] = end_index;
     // MODI Ji is LIve Gotta Go for sometime.... will be back.....
 
 }
@@ -280,3 +314,5 @@ function calcBoxCordFromIndex(index, rowsize = 10) {
 //       console.log('Switching Camera');
 //       switchCamera();
 //   }, 2000);
+
+const timeout = ms => new Promise(res => setTimeout(res, ms))
