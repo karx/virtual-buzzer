@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function(){
     setTimeout(test, 2600);  
 }, false)
 
+const camera_rigs = ["camera", "camera2", "camera3", "camera4"];
+let switch_count = 0;
+
 let game_state = {
     total_players: 0,
     player_list: [
@@ -54,7 +57,7 @@ function init() {
     generateVirtue(52,89);
     generateVirtue(5,45);
 
-    generateVice(99,29);
+    generateVice(98,29);
     generateVice(46,2);
     generateVice(62,35);
     generateVice(78,21);
@@ -111,6 +114,7 @@ function onConnect() {
     console.log("onConnect");
     client.subscribe(`vchoopad/${number}/connected`);
     client.subscribe(`vchoopad/${number}/move`);
+    client.subscribe(`vchoopad/${number}/cam`);
     let message = new Paho.Message("Hello");
     message.destinationName = `vchoopad/${number}/presence`;
     client.send(message);
@@ -147,6 +151,8 @@ function onMessageArrived(message) {
         let move_val = move.split('/')[1];
         
         updatePlayerWithVal(move_player, move_val);
+    } else if (message.topic === `vchoopad/${number}/cam`) {
+        switchCamera();
     }
 
     console.log(message);
@@ -154,6 +160,7 @@ function onMessageArrived(message) {
 }
 function show_connected_feedback() {
     document.getElementById('connection_code').style.backgroundColor ='#00FF00';
+    cam_rig_1();
 }
 function send_ack_connection (ack_dev_id) {
     let message = new Paho.Message("ack");
@@ -167,6 +174,11 @@ function buzzer_click() {
     client.send(message);
 }
 
+
+function cam_rig_1() {
+    console.log('firing event');
+    document.getElementById('rig').emit('connected');
+}
 function init_player_if_new(dev_id) {
     if (game_state.player_list[dev_id]) {
         console.log(`player is already added`);
@@ -253,3 +265,18 @@ function calcBoxCordFromIndex(index, rowsize = 10) {
         z: z_index
     };
   }
+
+  function switchCamera() {
+    let cam_id = camera_rigs[++switch_count % camera_rigs.length];
+    let camEl = document.getElementById(cam_id);
+    camEl.setAttribute("camera", "active", true);
+    console.log(camEl.getAttribute('rotation'));
+    console.log(camEl.getAttribute('position'));
+    camEl.emit('switch');
+  }
+
+
+//   setInterval( () => {
+//       console.log('Switching Camera');
+//       switchCamera();
+//   }, 2000);

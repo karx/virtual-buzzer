@@ -77,6 +77,22 @@
         </a-box>
         <a-box id="player-1" position="1 1 0.4" scale="0.1 0.1 0.1"  color="blue" ></a-box>
         
+        <a-entity id="rig" position="0.67 1.6 -3.5" animation="property:rotation; to: 0 150 0; dur: 1000; startEvents: connected,switch; from:0 0 0; " >
+          
+          <a-entity id="camera" camera="active: true" look-controls wasd-controls></a-entity>
+      </a-entity>
+      <a-entity id="rig2" position="-5 10 5" animation="property:rotation; from:0 0 0; to: -90 0 0; dur: 5000; startEvents: switch">
+          <a-entity id="camera2" camera look-controls wasd-controls></a-entity>
+          <!-- <a-entity id="camera_placeHolder" gltf-model="#type-person-boy" position="2 2 -2" static-body></a-entity> -->
+      </a-entity>
+      <a-entity id="rig3" position="-5 -10 5" animation="property:rotation; from:0 0 0;  to: 90 0 0; dur: 1000; startEvents: switch">
+        <a-entity id="camera3" camera look-controls wasd-controls></a-entity>
+        <!-- <a-entity id="camera_placeHolder" gltf-model="#type-person-boy" position="2 2 -2" static-body></a-entity> -->
+    </a-entity>
+    <a-entity id="rig4" position="-15 2 20" animation="property:rotation; from:0 0 0; to: 0 -30 0; dur: 1000; startEvents: switch">
+      <a-entity id="camera4" camera look-controls wasd-controls></a-entity>
+      <!-- <a-entity id="camera_placeHolder" gltf-model="#type-person-boy" position="2 2 -2" static-body></a-entity> -->
+  </a-entity>
         <!-- // how do we create Bridges/Ladders and Snakes/Black holes......  -->
 
     </a-scene>
