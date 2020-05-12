@@ -15,6 +15,11 @@ document.getElementById("btn-click").onclick = () => {
 
 document.getElementById("send-number").onclick = () => {
   sendDiceRollingNumber();
+  
+}
+
+document.getElementById("switch-camera").onclick = () => {
+  switchCameraRequest();
 }
 var ID = (function() {
   // Math.random should be unique because of its seeding algorithm.
@@ -92,6 +97,13 @@ function sendMeetInfoToAll(message_in = 'wfh') {
 function sendDiceRollingNumber(num = 4) {
   let message = new Paho.Message(`${ID}/${num}`);
   message.destinationName = `vchoopad/${dev_id}/move`;
+  // client.subscribe(`vchoopad/${message_in}/connected`);
+  client.send(message);
+}
+
+function switchCameraRequest() {
+  let message = new Paho.Message(`Switch`);
+  message.destinationName = `vchoopad/${dev_id}/cam`;
   // client.subscribe(`vchoopad/${message_in}/connected`);
   client.send(message);
 }
