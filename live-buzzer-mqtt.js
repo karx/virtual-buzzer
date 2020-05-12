@@ -13,6 +13,7 @@ let game_state = {
 };
 
 let PLAYER_HEIGHT = 1;
+
 async function test() {
     // updateChartWithStrings(['Getting started is 50% of the job done'], 'started');
 
@@ -46,6 +47,19 @@ function init() {
     connection_code.setAttribute("value", number);
     theScene.appendChild(connection_code);
     
+    generateVirtue(4,19);
+    generateVirtue(80,90);
+    generateVirtue(6,30);
+    generateVirtue(8,18);
+    generateVirtue(52,89);
+    generateVirtue(5,45);
+
+    generateVice(99,29);
+    generateVice(46,2);
+    generateVice(62,35);
+    generateVice(78,21);
+    generateVice(43,15);
+    generateVice(63,44);
 };
 
 // init();
@@ -181,6 +195,61 @@ function updatePlayerWithVal(player_id, value) {
     let playerEl = document.getElementById(player.DOM_id);
     player.board_position += parseInt(value);
     console.log(`Moving ${player_id} with ${value} block.. ${player.board_position} | -${(player.board_position)%(game_state.rowsize)} ${PLAYER_HEIGHT} ${ ((player.board_position)/(game_state.rowsize))}`);
-
     playerEl.setAttribute('position', `-${(player.board_position)%(game_state.rowsize)} ${PLAYER_HEIGHT} ${ ((player.board_position)/(game_state.rowsize))}`);
 }
+
+
+function generateVirtue(start_index, end_index) {
+    generateVirtueVice(start_index, end_index, "virtue");
+}
+
+
+function generateVice(start_index, end_index) {
+    generateVirtueVice(start_index, end_index, "vice");
+}
+function generateVirtueVice(start_index, end_index, type = "virtue") {
+    let isVirtue = type == "virtue";
+    let start_box = calcBoxCordFromIndex(start_index);
+    let end_box = calcBoxCordFromIndex(end_index);
+
+    let virtueTube = document.createElement('a-tube');
+
+    let pos_array_for_tube = [];
+    let curve_count = 3;
+
+    for (let point_index = 0; point_index <= curve_count; point_index++) {
+        let factor = point_index * (curve_count - point_index);
+        let central_x = ((start_box.x * (curve_count-point_index)) + (end_box.x * point_index))/curve_count;
+        let central_z = ((start_box.z * (curve_count-point_index)) + (end_box.z * point_index))/curve_count;
+        
+        let random_X = (Math.random() *factor) - factor/2; /// gives random bw -factor/2 and factor/2
+        let random_Y = (Math.random() *factor) + 0.7; /// gives random bw 2 and 2 + factor
+        let random_Z = (Math.random() *factor) - factor/2; /// gives random bw -factor/2 and factor/2
+
+        let pos_val = `${central_x + random_X} ${isVirtue ? '' : '-'}${random_Y} ${central_z + random_Z}`;
+
+        pos_array_for_tube.push(pos_val);
+        
+    }
+    let tube_postion_string = pos_array_for_tube.join(',');
+    console.log(tube_postion_string);
+
+    virtueTube.setAttribute('path', tube_postion_string);
+    virtueTube.setAttribute('radius', (end_index - start_index) * 0.004);
+    virtueTube.setAttribute('material', isVirtue ? 'color: #3EE34E' : 'color: #E33E4E' );
+    let theScene = document.getElementById('theScene');
+    
+    theScene.append(virtueTube);
+    // MODI Ji is LIve Gotta Go for sometime.... will be back.....
+
+}
+
+function calcBoxCordFromIndex(index, rowsize = 10) {
+    let x_index = (((parseInt(index/rowsize)%2)* rowsize) - (index%rowsize)) - (parseInt(index/rowsize)%2); //MOD of this actuyall
+    x_index = x_index < 0 ? -x_index : x_index;
+    let z_index = parseInt(index/rowsize) + ((index * 0.4) /rowsize);
+    return {
+        x: - x_index,
+        z: z_index
+    };
+  }

@@ -26,9 +26,13 @@ AFRAME.registerComponent("game-board", {
     init_board(rowsize , colsize) {
         
       let board_matrix = [];
-      let box_count = rowsize * colsize;
+      let box_count = rowsize * colsize;                
       for (let index = 0; index < box_count; index++) {
-        let new_box_position = `-${index%rowsize} 0 ${ (index/rowsize)}`;
+        let x_index = (((parseInt(index/rowsize)%2)* rowsize) - (index%rowsize)) - (parseInt(index/rowsize)%2); //MOD of this actuyall
+        x_index = x_index < 0 ? -x_index : x_index;
+        let z_index = parseInt(index/rowsize) + ((index * 0.4) /rowsize);
+        
+        let new_box_position = `-${x_index} 0 ${z_index}`;
         let new_box = document.createElement('a-box');
         new_box.setAttribute('color',`#000`);
         new_box.setAttribute('position',new_box_position);
@@ -38,7 +42,7 @@ AFRAME.registerComponent("game-board", {
         console.log('creating box');
 
         
-        let box_text_position = `-${index%rowsize} ${0.4 + index * 0.01} ${ (index/rowsize)}`;
+        let box_text_position = `-${x_index} ${0.4 + index * 0.01} ${z_index}`;
         let box_text = document.createElement('a-text');
         
        box_text.setAttribute("color", '#E1E9CB');
@@ -82,4 +86,14 @@ AFRAME.registerComponent("game-board", {
     } else {
       return image_url;
     }
+  }
+
+  function calcBoxCordFromIndex(index, rowsize = 10) {
+    let x_index = (((parseInt(index/rowsize)%2)* rowsize) - (index%rowsize)) - (parseInt(index/rowsize)%2); //MOD of this actuyall
+    x_index = x_index < 0 ? -x_index : x_index;
+    let z_index = parseInt(index/rowsize) + ((index * 0.4) /rowsize);
+    return {
+        x: x_index,
+        z: z_index
+    };
   }

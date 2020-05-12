@@ -60,9 +60,6 @@ AFRAME.registerComponent("game-player", {
     // ...
     addNewImage: function (dataToUse) {
       let entityEl = this.parentEntity;
-  
-  
-  
       this.parentEntity.setAttribute("material", `src: url(${handleSvg(this.data.image_url)})`);
       this.textEntity.setAttribute("value", this.data.label);
       this.typetextEntity.setAttribute("value", this.data.instanceof);
