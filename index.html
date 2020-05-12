@@ -10,7 +10,9 @@
       src="https://www.gstatic.com/charts/loader.js"
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.js"></script>
-
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="./components/game-board.js"></script>
+    <script src="./components/game-player.js"></script>
     <style>
         .container {
             display: flex;
@@ -24,8 +26,11 @@
           background-color: #3E3E3E;
           padding: 5vh;
         }
+        #theScene {
+          z-index: -1;
+        }
     </style>
-    <title>Virtual JustBuzz - 📢</title>
+    <title>Virtual Chaoopat - 📢</title>
   </head>
   <body>
     <div class="container">
@@ -38,13 +43,43 @@
           class="btn"
           id="init-btn"
         >
-          Reveal JustBuzz Code
+          Reveal Code
         </button>
       </div>
       <div id="buzzer_basic" onclick="buzzer_click()">
-        <img src="./assets/images/buzzer.jpg" alt="" />
+        
       </div>
+        
     </div>
+    <a-scene id="theScene" embed=true background="color: #3E3E3E">
+
+      <a-entity game-board>
+
+      </a-entity>
+
+      <!-- Added using JS mostly <game-player><game-player> -->
+        <!-- <a-entity game-player="label:karx;description:READ;roll-value:5;instanceof:false;image_url:'https://akriya.co.in/assets/images/coke-voting-show.png' -->
+        
+        <!-- >  -->
+          <!-- Status : READY, Waiting, Rolling, AFK -->
+          <!-- roll value only shown when status is READY. or maybe at instanceof=bool -->
+          <!-- *at incoming transfer -> READY -> ROLLING -> READY -> (transfer) -> Waiting -> *until transfer -->
+
+        <!-- </a-entity > -->
+        <!-- <a-entity game-player="label:karx;description:READ;roll-value:5;instanceof:false;image_url:'https://akriya.co.in/assets/images/homepage-banner.png'"  -->
+        
+        <!-- > -->
+
+        <!-- </a-entity > -->
+        
+        <a-box id="player-0" position="1 1 0" scale="0.1 0.1 0.1" color="red">
+        </a-box>
+        <a-box id="player-1" position="1 1 0.4" scale="0.1 0.1 0.1"  color="blue" ></a-box>
+
+        <!-- // how do we create Bridges/Ladders and Snakes/Black holes......  -->
+
+    </a-scene>
+  
     <script src="./live-buzzer-mqtt.js"></script>
   </body>
 </html>

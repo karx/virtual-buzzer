@@ -12,6 +12,10 @@ document.getElementById("btn-click").onclick = () => {
     console.log(`Device Id set to ${dev_id}`);
   }
 };
+
+document.getElementById("send-number").onclick = () => {
+  sendDiceRollingNumber();
+}
 var ID = (function() {
   // Math.random should be unique because of its seeding algorithm.
   // Convert it to base 36 (numbers + letters), and grab the first 9 characters
@@ -25,7 +29,7 @@ var ID = (function() {
 })();
 var client = new Paho.Client(
   "wss://api.akriya.co.in:8084/mqtt",
-  `clientId-vb-watch-${ID}`
+  `clientId-vb-chopaat-control-${ID}`
 );
 
 // set callback handlers
@@ -39,12 +43,12 @@ client.connect({ onSuccess: onConnect });
 function onConnect() {
   // Once a connection has been made, make a subscription and send a message.
   console.log("onConnect");
-  client.subscribe("vbuzzer/watch/master");
-  client.subscribe(`vbuzzer/${ID}/connection_ack`);
-  client.subscribe(`vbuzzer/adminall/requested`);
-  client.subscribe(`vbuzzer/ftz/requested`);
+  client.subscribe("vchoopad/watch/master");
+  client.subscribe(`vchoopad/${ID}/connection_ack`);
+  client.subscribe(`vchoopad/adminall/requested`);
+  client.subscribe(`vchoopad/ftz/requested`);
   let message = new Paho.Message("Hello");
-  message.destinationName = "vbuzzer/watch/presence";
+  message.destinationName = "vchoopad/watch/presence";
   client.send(message);
 }
 
@@ -60,11 +64,11 @@ function onMessageArrived(message) {
   console.log("onMessageArrived:" + message.payloadString);
   console.log("The Topic:" + message.topic);
   let stubs = message.topic.split("/");
-  if (stubs[0] === `vbuzzer` && stubs[2] === `requested`) {
+  if (stubs[0] === `vchoopad` && stubs[2] === `requested`) {
     let dev_id_in_request = stubs[1];
     console.log("One of our tables");
     notify_table_ui(dev_id_in_request);
-  } else if (message.topic === `vbuzzer/${ID}/connection_ack`) {
+  } else if (message.topic === `vchoopad/${ID}/connection_ack`) {
     add_to_list_of_tables(dev_id);
     device_live_ui_notify();
   }
@@ -72,16 +76,23 @@ function onMessageArrived(message) {
 
 function sendConformationToMobile(message_in) {
   let message = new Paho.Message(ID);
-  message.destinationName = `vbuzzer/${message_in}/connected`;
-  // client.subscribe(`vbuzzer/${message_in}/connected`);
-  client.subscribe(`vbuzzer/${message_in}/requested`);
+  message.destinationName = `vchoopad/${message_in}/connected`;
+  // client.subscribe(`vchoopad/${message_in}/connected`);
+  client.subscribe(`vchoopad/${message_in}/requested`);
   client.send(message);
 }
 
 function sendMeetInfoToAll(message_in = 'wfh') {
   let message = new Paho.Message(ID);
-  message.destinationName = `vbuzzer/ftz/requested`;
-  // client.subscribe(`vbuzzer/${message_in}/connected`);
+  message.destinationName = `vchoopad/ftz/requested`;
+  // client.subscribe(`vchoopad/${message_in}/connected`);
+  client.send(message);
+}
+
+function sendDiceRollingNumber(num = 4) {
+  let message = new Paho.Message(`${ID}/${num}`);
+  message.destinationName = `vchoopad/${dev_id}/move`;
+  // client.subscribe(`vchoopad/${message_in}/connected`);
   client.send(message);
 }
 
@@ -170,3 +181,4 @@ function notify_table_ui_power_up(device_id) {
 function notify_table_ui_power_down(device_id) {
   document.getElementById(device_id).classList = "each-table";
 }
+
