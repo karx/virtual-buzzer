@@ -241,6 +241,8 @@ function moveDiceToAir() {
   // console.log(dice.body);
   // console.log(dice.body.velocity.norm());
   dice.body.position.set(0,10,0);
+  dice.body.velocity.set(0,0,0);
+  dice.body.angularVelocity.set(0,0,0);
 }
 function diceImpulseWith(x,y,z) {
   dice.body.applyLocalImpulse(new CANNON.Vec3(x,y,z), new CANNON.Vec3(0,-1,0));
