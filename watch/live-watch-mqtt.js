@@ -214,3 +214,8 @@ function htmlLog(str) {
   new_log.innerHTML = str;
   document.getElementById('bg-scene-debug').append(new_log);
 }
+
+
+// setInterval( () => {
+//   // htmlLog('V second');
+// }, 1000);
