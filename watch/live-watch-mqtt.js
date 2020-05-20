@@ -245,6 +245,6 @@ function moveDiceToAir() {
   dice.body.angularVelocity.set(0,0,0);
 }
 function diceImpulseWith(x,y,z) {
-  dice.body.applyLocalImpulse(new CANNON.Vec3(x,y,z), new CANNON.Vec3(0,-1,0));
+  dice.body.applyImpulse(new CANNON.Vec3(x,y,z), new CANNON.Vec3(0,-1,0));
   
 }
