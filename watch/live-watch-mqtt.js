@@ -240,7 +240,7 @@ function moveDiceToAir() {
   // let dice = document.getElementById('dice');
   // console.log(dice.body);
   // console.log(dice.body.velocity.norm());
-  dice.body.position.set(0,10,0);
+  dice.body.position.set(0,9,0);
   dice.body.velocity.set(0,0,0);
   dice.body.angularVelocity.set(0,0,0);
 }

@@ -69,7 +69,13 @@
       <div class="bg-scene" id="theScene">
         <a-scene id="theScene" embed=true background="color: #3E3E3E">
           <a-box position="0 0 0" color="#3E3E3E" scale="10 1 10" static-body  material="roughness:0.6; metalness:0.2"></a-box>
-          <a-box id="dice" position="1 10 0" color="blue" rotation="10 25 0" dynamic-body material="roughness:0.2; metalness:0.5"></a-box>
+          <a-box position="5 5 0" visible="false" scale="10 1 10" rotation="0 0 90" static-body  material="roughness:0.6; metalness:0.2"></a-box>
+          <a-box position="-5 5 0" visible="false" scale="10 1 10"  rotation="0 0 90" static-body  material="roughness:0.6; metalness:0.2"></a-box>
+          <a-box position="0 5 5" visible="false" scale="10 1 10" rotation="90 0 0" static-body  material="roughness:0.6; metalness:0.2"></a-box>
+          <a-box position="0 5 -5" visible="false" scale="10 1 10"  rotation="90 0 0" static-body  material="roughness:0.6; metalness:0.2"></a-box>
+          <a-box position="0 10 0" visible="false" scale="10 1 10" static-body  material="roughness:0.6; metalness:0.2"></a-box>
+          
+          <a-box id="dice" position="1 9 0" color="blue" rotation="10 25 0" dynamic-body material="roughness:0.2; metalness:0.5"></a-box>
           <a-box position="0 0 10" color="green"></a-box>
           <a-entity id="rig" position="0 10 0" >
             <a-entity id="camera" camera  rotation="-90 0 0"></a-entity>
