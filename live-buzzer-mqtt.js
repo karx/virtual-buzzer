@@ -66,7 +66,6 @@ function init() {
     generateVice(78, 21);
     generateVice(43, 15);
     generateVice(63, 44);
-    generataeVice()
 
     broadcastRommStarted();
 };
@@ -421,6 +420,14 @@ async function handleUIEvent(game_event) {
             showConnectionCode();
             break;
 
-        case ""
+        case "PLAYER_JOIN":
+            break;
+        case "PLAYER_LEAVE": 
+            break;
+        case "GAME_START":
+            break;
+        case "DICE_ROLL":
+            break;
+
     }
 }
