@@ -67,7 +67,7 @@
         <div class="connected-tables" id="all-tables"></div>
       </div>
       <div class="bg-scene" id="theScene">
-        <a-scene id="theScene" embed=true background="color: #3E3E3E">
+        <a-scene id="theScene" embed=true background="color: #3E3E3E" vr-mode-ui="enabled: false">
           <a-box position="0 0 0" color="#3E3E3E" scale="10 1 10" static-body  material="roughness:0.6; metalness:0.2"></a-box>
           <a-box position="5 5 0" visible="false" scale="10 1 10" rotation="0 0 90" static-body  material="roughness:0.6; metalness:0.2"></a-box>
           <a-box position="-5 5 0" visible="false" scale="10 1 10"  rotation="0 0 90" static-body  material="roughness:0.6; metalness:0.2"></a-box>
@@ -88,7 +88,7 @@
         </a-scene>
       </div>
       <div class="bg-scene-debug" id="bg-scene-debug">
-        <p>This is debug</p>
+        <!-- <p>This is debug</p> -->
       </div>
     </div>
     <script src="./live-watch-mqtt.js"></script>
