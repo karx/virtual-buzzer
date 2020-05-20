@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
     <link rel="stylesheet" href="style.css" />
     <style>
       .container {
@@ -13,6 +15,24 @@
         align-items: center;
         justify-content: center;
         min-height: 80vh;
+        position: relative;
+      }
+      .bg-scene {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .bg-scene-debug {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
       }
     </style>
     <title>Virtual Watch - ⛑</title>
@@ -45,6 +65,24 @@
           <img src="../assets/images/watch.jpg" alt="" srcset="" />
         </div>
         <div class="connected-tables" id="all-tables"></div>
+      </div>
+      <div class="bg-scene">
+        <a-scene id="theScene" embed=true background="color: #3E3E3E">
+          <a-box position="0 0 0" color="#3E3E3E" scale="10 1 10" static-body  material="roughness:0.6; metalness:0.2"></a-box>
+          <a-box position="1 10 0" color="blue" rotation="10 25 0" dynamic-body material="roughness:0.2; metalness:0.5"></a-box>
+          <a-box position="0 0 10" color="green"></a-box>
+          <a-entity id="rig" position="0 10 0" rotation="-90 0 0">
+            <a-entity id="camera" camera look-controls wasd-controls></a-entity>
+          </a-entity>
+          <a-entity id="rig2" position="0 10 0" rotation="0 0 0">
+            <!-- <a-entity id="camera2" camera look-controls wasd-controls></a-entity> -->
+          </a-entity>
+          <a-light type="ambient" color="#445451"></a-light>
+          <a-light type="point" intensity="2" position="2 4 4"></a-light>
+        </a-scene>
+      </div>
+      <div class="bg-scene-debug">
+        <p>This is debug</p>
       </div>
     </div>
     <script src="./live-watch-mqtt.js"></script>

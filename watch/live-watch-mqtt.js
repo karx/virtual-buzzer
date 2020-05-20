@@ -199,3 +199,18 @@ function notify_table_ui_power_down(device_id) {
   document.getElementById(device_id).classList = "each-table";
 }
 
+window.addEventListener('deviceorientation', function(event) {
+  console.log('D-or: ' + event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
+  htmlLog('D-or: ' + event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
+});
+
+window.addEventListener('devicemotion', function(event) {
+  console.log('D-mo' + event.acceleration.x + ' m/s2');
+  htmlLog('D-mo' + event.acceleration.x + ' m/s2');
+});
+
+function htmlLog(str) {
+  let new_log = document.createElement('p');
+  new_log.innerHTML = str;
+  document.getElementById('bg-scene-debug').append(new_log);
+}
