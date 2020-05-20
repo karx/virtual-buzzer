@@ -63,3 +63,7 @@ These list of messages, lore, facts are to be shown on spec page as the Game pro
 * Generate The Ups and Downs
 * Dice roll impl - Webcomponent would be nice
 * WebRTC to talk amongst players
+
+
+## Misc
+This project is deployed using Netlify. [![Netlify Status](https://api.netlify.com/api/v1/badges/821c1207-3a03-48a2-b97b-2ad558c7ef88/deploy-status)](https://app.netlify.com/sites/gameofknowledge/deploys)
