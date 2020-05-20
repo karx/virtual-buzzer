@@ -1,5 +1,7 @@
 let dev_id = "1111";
 let list_of_tables = [];
+let theScene = document.getElementById('theScene');
+let dice = document.getElementById('dice');
 
 document.getElementById("btn-click").onclick = () => {
   dev_id = document.getElementById("connection_code").value;
@@ -199,23 +201,48 @@ function notify_table_ui_power_down(device_id) {
   document.getElementById(device_id).classList = "each-table";
 }
 
-window.addEventListener('deviceorientation', function(event) {
-  console.log('D-or: ' + event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
-  htmlLog('D-or: ' + event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
-});
+// window.addEventListener('deviceorientation', function(event) {
+//   console.log('D-or: ' + event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
+//   htmlLog('D-or: ' + event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
+  
+// });
 
 window.addEventListener('devicemotion', function(event) {
   console.log('D-mo' + event.acceleration.x + ' m/s2');
-  htmlLog('D-mo' + event.acceleration.x + ' m/s2');
+  htmlLog('D-mo.. || X = ' + event.acceleration.x + 'Y = ' + event.acceleration.y + 'Z = ' + event.acceleration.z);
+  diceImpulseWith(event.acceleration.x, event.acceleration.z, event.acceleration.y);
 });
 
 function htmlLog(str) {
   let new_log = document.createElement('p');
   new_log.innerHTML = str;
-  document.getElementById('bg-scene-debug').append(new_log);
 }
 
 
 // setInterval( () => {
 //   // htmlLog('V second');
 // }, 1000);
+
+theScene.addEventListener("touchstart", handleTouchStart);
+theScene.addEventListener("click", handleTouchStart, false);
+theScene.addEventListener("touchend", handleEnd, false);
+theScene.addEventListener("touchcancel", handleCancel, false)
+
+function handleTouchStart(evt) {
+  // evt.preventDefault();
+  var touches = evt.changedTouches;
+  console.log("touchstart.");
+  htmlLog('Touch Down');
+  moveDiceToAir();
+}
+
+function moveDiceToAir() {
+  // let dice = document.getElementById('dice');
+  // console.log(dice.body);
+  // console.log(dice.body.velocity.norm());
+  dice.body.position.set(0,10,0);
+}
+function diceImpulseWith(x,y,z) {
+  dice.body.applyLocalImpulse(new CANNON.Vec3(x,y,z), new CANNON.Vec3(0,-1,0));
+  
+}
